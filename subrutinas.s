@@ -36,4 +36,6 @@ contador:
     
     
     cmp r1, #0 @@ si la comparción es 0, termina el ciclo
-	bne contadorNombre  @@ si no es 0, continua el ciclo
+	bne contador  @@ si no es 0, continua el ciclo
+
+    mov pc, lr  @@ retorna a la función principal

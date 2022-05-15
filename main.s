@@ -79,11 +79,98 @@ main:
 
     ldr r0, [r10] @@ carga el numero de vocales del nombre en r0
     ldr r3, [r7] @@ carga el numero de letras del nombre en r3
-    ldr r4, [r2] @@ carga el ultimo caracter del nombre en r4 
+    ldr r4, [r2] @@ carga el ultimo caracter del apellido en r4 
     ldr r2,[r6] @@ carga el nombre en r2
     bl contador
 
     ldr r10,[r0] @@ carga el numero de vocales del nombre en r10 (retorno de subrutina)
+
+    /* --- variables --- 
+    r1 = ultimo caracter del nombre
+    r4 = ultimo caracter del apellido
+    r6 = nombre
+    r7 = numero de letras del nombre
+    r8 = apellido
+    r9 = numero de letras del apellido
+    r10 = numero de vocales del nombre
+    r11 = numero de vocales del apellido
+
+    subrutina contador (nombre)
+    r3 = r9
+    r1 = r4
+    r2 = r8
+    r0 = r11    
+    */
+
+    ldr r0, [r11] @@ carga el numero de vocales del apellido en r0
+    ldr r3, [r9] @@ carga el numero de letras del apellido en r3
+    ldr r5, [r1] @@ carga el ultimo caracter del nombre en r5
+    ldr r1,[r4] @@ carga el ultimo caracter del apellido en r1
+    ldr r2,[r8] @@ carga el apellido en r2
+    bl contador
+    
+comparar:
+    /* --- Comparacion de cantidad de letras --- */
+    ldr r2,= puntos @@ set de variable para el numero de puntos
+    ldr r12, [r2]
+
+    cmp r7, r9 @@ compara el numero de letras del nombre con el del apellido
+    addeq r12, r12, #1 @@ si son iguales, suma 1 al numero de puntos
+    
+    /* --- Comparar vocales --- */
+    cmp r10, r11 @@ compara el numero de vocales del nombre con el del apellido
+    addeq r12, r12, #1 @@ si son iguales, suma 1 al numero de puntos
+
+    /* --- Comparar Ultima Letra --- */
+    ldrb r1, [r6,#-1] @@ carga el ultimo caracter del nombre
+    ldrb r2, [r8,#-1] @@ carga el ultimo caracter del apellido
+
+    cmp r1, r2 @@ compara el ultimo caracter del nombre con el del apellido
+    addeq r12, r12, #1 @@ si son iguales, suma 1 al numero de puntos
+
+    cmp r12, #2 
+    bge Aprobado @@ si el numero de puntos es mayor o igual a 2, se cumple la condicion
+    blt Rechazado @@ si el numero de puntos es menor a 2, se cumple la condicion
+
+Aprobado:
+    mov r1, r12  @@ carga el numero de puntos en r1
+
+    ldr r0,= aprobado
+    bl printf   
+    b fin 
+
+Rechazado:
+    mov r1, r12 @@ carga el numero de puntos en r1
+
+    ldr r0,= rechazado
+    bl printf  
+    b fin
+fin:    
+	@@ salida correcta
+	mov r0, #0
+	mov r3, #0
+	ldmfd sp!, {lr}	/* R13 = SP */
+	bx lr
+
+.data
+.align 2
+ingresoNombre: .asciz "Ingrese el nombre del bebe"
+ingresoApellido: .asciz "\nIngrese el apellido del bebe"
+aprobado: .asciz " \nLa calificacion es de %d puntos, el nombre fue aprobado\n"
+rechazado: .asciz "\nLa calificacion es de %d puntos, el nombre fue rechazado\n"
+bienvenida: .asciz "\n\t\t\t\t¡Bienvenido!\n\nPara el calculo de compatibilidad de nombres para bebes realice las que se pide\n--------------------------------------------------------------------------------\n"
+nombre: .space 100
+apellido: .space 100
+
+typeLetras: .asciz " %s"
+
+numNombre: .word 0
+numApellido: .word 0
+puntos: .word 0
+vocalesNombre: .word 0
+vocalesApellido: .word 0
+
+
 
     
     
