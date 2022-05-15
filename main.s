@@ -136,7 +136,7 @@ comparar:
 
 Aprobado:
     
-  /* --- Impresion de mensaje aprobado--- */
+    /* --- Impresion de mensaje aprobado--- */
     mov r7 , #4
     mov r0, #1
     mov r2, #200
