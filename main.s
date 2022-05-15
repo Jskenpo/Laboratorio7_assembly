@@ -108,7 +108,9 @@ main:
     ldr r1,[r4] @@ carga el ultimo caracter del apellido en r1
     ldr r2,[r8] @@ carga el apellido en r2
     bl contador
-    
+
+    ldr r11,[r0] @@ carga el numero de vocales del apellido en r11 (retorno de subrutina)
+
 comparar:
     /* --- Comparacion de cantidad de letras --- */
     ldr r2,= puntos @@ set de variable para el numero de puntos
