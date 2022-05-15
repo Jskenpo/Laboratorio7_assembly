@@ -20,29 +20,29 @@ main:
 
 	stmfd sp!, {lr}								@@ SP = R13 link register 
 	/* --- Impresion encabezado --- */
-    ldr r0,= bienvenida
-    bl puts
+    mov r7 , #4
+    mov r0, #1
+    mov r2, #200
+    ldr r1 , =bienvenida
+    SWI 0
 
     /* --- Ingreso de nombre --- */
-	ldr r0,=ingresoNombre
-	bl puts
 
-	ldr r0,=typeLetras
-	ldr r1,=nombre
-	bl scanf
-
-    ldr r6,= nombre
+    mov r7 , #3
+    mov r0, #0
+    mov r2, #200
+    ldr r1 , =nombre
+    SWI 0
+    ldr r6, [r1]
 
     
     /* --- Ingreso de apellido --- */
-	ldr r0,=ingresoApellido
-	bl puts
-
-    ldr r0,=typeLetras
-	ldr r1,=apellido
-	bl scanf
-
-    ldr r8,= apellido
+	mov r7 , #3
+    mov r0, #0
+    mov r2, #200
+    ldr r1 , =apellido
+    SWI 0
+    ldr r8, [r1]
 
     /* --- Cargar Cantidad de letras --- */
     ldr r7,= numNombre @@ set de variable para el numero de letras del nombre
@@ -135,37 +135,50 @@ comparar:
     blt Rechazado @@ si el numero de puntos es menor a 2, se cumple la condicion
 
 Aprobado:
+    
+  /* --- Impresion de mensaje aprobado--- */
+    mov r7 , #4
+    mov r0, #1
+    mov r2, #200
+    ldr r1 , =aprobado
+    SWI 0
+
     mov r1, r12  @@ carga el numero de puntos en r1
 
-    ldr r0,= aprobado
-    bl printf   
-    b fin 
+    mov r7 , #4
+    mov r0, #1
+    mov r2, #200
+    ldr r1 ,[r1]
+    SWI 0
+
 
 Rechazado:
-    mov r1, r12 @@ carga el numero de puntos en r1
+    mov r7 , #4
+    mov r0, #1
+    mov r2, #200
+    ldr r1 , =aprobado
+    SWI 0
 
-    ldr r0,= rechazado
-    bl printf  
-    b fin
+    mov r1, r12  @@ carga el numero de puntos en r1
+
+    mov r7 , #4
+    mov r0, #1
+    mov r2, #200
+    ldr r1 ,[r1]
+    SWI 0
 fin:    
-	@@ salida correcta
-	mov r0, #0
-	mov r3, #0
-	ldmfd sp!, {lr}	/* R13 = SP */
-	bx lr
+	mov r7, #1
+    SWI 0
 
 .data
 .align 2
 ingresoNombre: .asciz "Ingrese el nombre del bebe"
 ingresoApellido: .asciz "\nIngrese el apellido del bebe"
-aprobado: .asciz " \nLa calificacion es de %d puntos, el nombre fue aprobado\n"
+aprobado: .asciz " \n La calificacion es de %d puntos, el nombre fue abrobado\n"
 rechazado: .asciz "\nLa calificacion es de %d puntos, el nombre fue rechazado\n"
 bienvenida: .asciz "\n\t\t\t\t¡Bienvenido!\n\nPara el calculo de compatibilidad de nombres para bebes realice las que se pide\n--------------------------------------------------------------------------------\n"
-nombre: .space 100
-apellido: .space 100
-
-typeLetras: .asciz " %s"
-
+nombre: "                        "
+apellido: "                       "
 numNombre: .word 0
 numApellido: .word 0
 puntos: .word 0
