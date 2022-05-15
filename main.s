@@ -77,10 +77,10 @@ main:
     r0 = r10
     */
 
-    ldr r0, [r10] @@ carga el numero de vocales del nombre en r0
-    ldr r3, [r7] @@ carga el numero de letras del nombre en r3
-    ldr r4, [r2] @@ carga el ultimo caracter del apellido en r4 
-    ldr r2,[r6] @@ carga el nombre en r2
+    mov r0, r10 @@ carga el numero de vocales del nombre en r0
+    mov r3, r7 @@ carga el numero de letras del nombre en r3
+    mov r4, r2 @@ carga el ultimo caracter del apellido en r4 
+    mov r2, r6 @@ carga el nombre en r2
     bl contador
 
     ldr r10,[r0] @@ carga el numero de vocales del nombre en r10 (retorno de subrutina)
@@ -102,11 +102,11 @@ main:
     r0 = r11    
     */
 
-    ldr r0, [r11] @@ carga el numero de vocales del apellido en r0
-    ldr r3, [r9] @@ carga el numero de letras del apellido en r3
+    mov r0, r11 @@ carga el numero de vocales del apellido en r0
+    mov r3, r9 @@ carga el numero de letras del apellido en r3
     ldr r5, [r1] @@ carga el ultimo caracter del nombre en r5
-    ldr r1,[r4] @@ carga el ultimo caracter del apellido en r1
-    ldr r2,[r8] @@ carga el apellido en r2
+    mov r1, r4 @@ carga el ultimo caracter del apellido en r1
+    mov r2, r8 @@ carga el apellido en r2
     bl contador
 
     ldr r11,[r0] @@ carga el numero de vocales del apellido en r11 (retorno de subrutina)
