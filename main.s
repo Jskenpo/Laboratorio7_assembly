@@ -2,7 +2,7 @@
 *Organización de computadoras y assembler 
 *Sección 10
 *
-*Laboratorio 6
+*Laboratorio 7
 *Ejercicio 1 (fortuna de bebé)
 *
 *Jose Santisteban
