@@ -95,7 +95,7 @@ main:
     r10 = numero de vocales del nombre
     r11 = numero de vocales del apellido
 
-    subrutina contador (nombre)
+    subrutina contador (apellido)
     r3 = r9
     r1 = r4
     r2 = r8
